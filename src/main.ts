@@ -1,9 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { json } from 'express';
+import { AllExceptionsFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // 🛡️Pega os erros 
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   // 🧠 Middleware para permitir que o Nest entenda JSON
   app.use(json());
